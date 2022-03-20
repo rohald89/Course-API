@@ -66,17 +66,21 @@ module.exports = (sequelize, DataTypes) => {
           notNull: {
             msg: 'A password is required',
           },
-        },
-        set(val) {
-          if (val.length >= 8 && val.length <= 20) {
-            this.setDataValue('password', bcrypt.hashSync(val, 10));
-          } else {
-            throw new Error('Your password should be between 8 and 20 characters');
-          }
+          len: {
+            args: [8, 20],
+            msg: 'Password must be between 8 and 20 characters',
+          },
         },
       },
     },
     {
+      // used a hook to hash the password before saving to the database
+      // this way the inputted password is being validated before hashing it
+      hooks: {
+        beforeCreate: async user => {
+          user.password = await bcrypt.hashSync(user.password, 10);
+        },
+      },
       sequelize,
       modelName: 'User',
     }

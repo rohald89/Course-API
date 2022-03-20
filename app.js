@@ -7,9 +7,6 @@ const { sequelize } = require('./models');
 const cors = require('cors');
 const userRoutes = require('./routes/userRoutes.js');
 
-// variable to enable global error logging
-const enableGlobalErrorLogging = process.env.ENABLE_GLOBAL_ERROR_LOGGING === 'true';
-
 // create the Express app
 const app = express();
 
@@ -29,14 +26,20 @@ app.use((req, res) => {
 
 // setup a global error handler
 app.use((err, req, res, next) => {
-  if (enableGlobalErrorLogging) {
-    console.error(`Global error handler: ${JSON.stringify(err.stack)}`);
+  console.log(err.name);
+  // catch Sequelize validationError
+  if (err.name === 'SequelizeValidationError' || err.name === 'SequelizeUniqueConstraintError') {
+    const errors = err.errors.map(err => err.message);
+    res.status(400).json({
+      message: errors,
+    });
+  } else {
+    // default to 500 server error
+    res.status(err.status || 500).json({
+      message: err.message,
+      error: {},
+    });
   }
-
-  res.status(err.status || 500).json({
-    message: err.message,
-    error: {},
-  });
 });
 
 // Check database connection.
