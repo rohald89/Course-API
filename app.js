@@ -27,7 +27,7 @@ app.use((req, res) => {
 
 // setup a global error handler
 app.use((err, req, res, next) => {
-  console.log(err.name);
+  console.log(err);
   // catch Sequelize validationError
   if (err.name === 'SequelizeValidationError' || err.name === 'SequelizeUniqueConstraintError') {
     const errors = err.errors.map(err => err.message);
