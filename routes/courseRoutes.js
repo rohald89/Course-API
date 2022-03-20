@@ -5,33 +5,16 @@ const {
   getCourse,
   createCourse,
   updateCourse,
+  deleteCourse,
 } = require('../controllers/courseControllers');
 const { authenticateUser } = require('../middleware/authenticateUser');
 
-/**
- * GET /api/courses
- * Returns all courses.
- */
-router.get('/', getAllCourses);
+router.route('/').get(getAllCourses).post(authenticateUser, createCourse);
 
-/**
- * Get /api/courses/:id
- * Returns a course by id.
- */
-router.get('/:id', getCourse);
-
-/**
- * POST /api/courses
- * Create a new course
- * Authentication required
- */
-router.post('/', authenticateUser, createCourse);
-
-/**
- * PUT /api/courses/:id
- * Update an existing course
- * Authentication required
- */
-router.put('/:id', authenticateUser, updateCourse);
+router
+  .route('/:id')
+  .get(getCourse)
+  .put(authenticateUser, updateCourse)
+  .delete(authenticateUser, deleteCourse);
 
 module.exports = router;
