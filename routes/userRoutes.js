@@ -6,6 +6,7 @@ const { authenticateUser } = require('../middleware/authenticateUser');
 /**
  * GET /api/users
  * Returns the currently logged in user.
+ * Requires authentication.
  */
 router.get('/', authenticateUser, getUser);
 

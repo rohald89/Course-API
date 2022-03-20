@@ -6,6 +6,7 @@ const morgan = require('morgan');
 const { sequelize } = require('./models');
 const cors = require('cors');
 const userRoutes = require('./routes/userRoutes.js');
+const courseRoutes = require('./routes/courseRoutes.js');
 
 // create the Express app
 const app = express();
@@ -15,7 +16,7 @@ app.use(morgan('dev'));
 app.use(express.json());
 
 app.use('/api/users', userRoutes);
-// app.use('/api/courses', courseRoutes);
+app.use('/api/courses', courseRoutes);
 
 // send 404 if no other route matched
 app.use((req, res) => {

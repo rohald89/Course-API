@@ -5,14 +5,40 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Course.belongsTo(models.User, {
-        foreignKey: 'userId',
+        as: 'user',
+        foreignKey: {
+          fieldName: 'userId',
+          allowNull: false,
+        },
       });
     }
   }
   Course.init(
     {
-      title: DataTypes.STRING,
-      description: DataTypes.TEXT,
+      title: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notEmpty: {
+            msg: 'Please provide a title',
+          },
+          notNull: {
+            msg: 'A title is required',
+          },
+        },
+      },
+      description: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+        validate: {
+          notEmpty: {
+            msg: 'Please provide a title',
+          },
+          notNull: {
+            msg: 'A title is required',
+          },
+        },
+      },
       estimatedTime: DataTypes.STRING,
       materialsNeeded: DataTypes.STRING,
     },
