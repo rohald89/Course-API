@@ -1,5 +1,5 @@
 const express = require('express');
-const router = express.Router();
+const { authenticateUser } = require('../middleware/authenticate.middleware');
 const {
   getAllCourses,
   getCourse,
@@ -7,10 +7,10 @@ const {
   updateCourse,
   deleteCourse,
 } = require('../controllers/courses.controllers');
-const { authenticateUser } = require('../middleware/authenticate.middleware');
+
+const router = express.Router();
 
 router.route('/').get(getAllCourses).post(authenticateUser, createCourse);
-
 router
   .route('/:id')
   .get(getCourse)
