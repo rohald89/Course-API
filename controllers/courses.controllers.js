@@ -1,6 +1,6 @@
-const { asyncHandler } = require('../middleware/asyncHandler');
+const { asyncHandler } = require('../middleware/asynchandler.middleware');
 const { Course, User } = require('../models');
-const filterAttributes = require('../helpers/filterAttributes');
+const filterAttributes = require('../utils/filterAttributes');
 
 /**
  * GET /api/courses

@@ -6,8 +6,8 @@ const {
   createCourse,
   updateCourse,
   deleteCourse,
-} = require('../controllers/courseControllers');
-const { authenticateUser } = require('../middleware/authenticateUser');
+} = require('../controllers/courses.controllers');
+const { authenticateUser } = require('../middleware/authenticate.middleware');
 
 router.route('/').get(getAllCourses).post(authenticateUser, createCourse);
 
