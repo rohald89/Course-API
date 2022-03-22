@@ -1,5 +1,6 @@
 /node_modules
 .env
 td-restapi.db
-test.http
 RESTAPI.postman_collection.json
+nodemon.json
+tests.http
